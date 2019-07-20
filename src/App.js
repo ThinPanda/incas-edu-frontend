@@ -1,10 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Router, Link } from "@reach/router";
+
+import PersistentDrawerLeft from "./components/PersistentDrawer";
+import HomePage from "./pages/HomePage";
+import Details from "./pages/UserDetails";
+import Resources from "./pages/ResourcesPage";
+import MyResource from "./pages/MyResourcePage";
+
 
 function App() {
   return (
-    <div className="App">
+  /*  <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -19,6 +26,20 @@ function App() {
           Learn React
         </a>
       </header>
+    </div>
+    */
+    <div>
+        <Router>
+            <HomePage path="/index" />
+            <PersistentDrawerLeft path="/">
+                {/*<Router>*/}
+                <Details path="/detail" />
+                <Resources path="/resource" />
+                <MyResource path="/myResource" />
+                {/*</Router>*/}
+            </PersistentDrawerLeft>
+        </Router>
+
     </div>
   );
 }
