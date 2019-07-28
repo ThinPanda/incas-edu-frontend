@@ -17,6 +17,8 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'center'
     },
     textField: {
+        // marginLeft: theme.spacing(1),
+        // marginRight: theme.spacing(1),
         margin: 25,
         width: 200,
     },
@@ -41,18 +43,7 @@ const currencies = [
     },
 ];
 
-const accountType = [
-    {
-        value: '个人',
-        label: 'ordinary',
-    },
-    {
-        value: '机构',
-        label: 'agency',
-    },
-];
-
-export default function Transfer() {
+export default function Withdraw() {
 
     const classes = useStyles();
 
@@ -61,22 +52,20 @@ export default function Transfer() {
             <Paper className={classes.paper} component='div' elevation={5} >
                 <br/>
                 <Typography variant='h4' align='center'>
-                    账户转账
+                    余额提现
                 </Typography>
                 <div style={{padding: '16px'}}>
                     <hr style={{margin: 20}}/>
                 </div>
-                <TransferTable/>
+                <WithdrawTable/>
             </Paper>
         </div>
     )
 }
 
-function TransferTable(props) {
+function WithdrawTable(props) {
 
     const [values, setValues] = React.useState({
-        account: "",
-        type: "个人",
         balance: 0,
         currency: 'RMB',
     });
@@ -91,46 +80,17 @@ function TransferTable(props) {
         <div className={classes.child}>
             <div>
                 <TextField
-                    id="withdraw-account"
-                    label="Account"
-                    className={classes.textField}
-                    type="email"
-                    onChange={handleChange('account')}
-                    margin="normal"
-                />
-                <TextField
-                    id="account-type"
-                    select
-                    label="Account type"
-                    className={classes.textField}
-                    value={values.currency}
-                    onChange={handleChange('type')}
-                    SelectProps={{
-                        native: true,
-                        MenuProps: {
-                            className: classes.menu,
-                        },
-                    }}
-                    helperText="Please select your account type"
-                    margin="normal"
-                >
-                    {accountType.map(option => (
-                        <option key={option.value} value={option.value}>
-                            {option.label}
-                        </option>
-                    ))}
-                </TextField>
-            </div>
-            <div>
-                <TextField
-                    id="withdraw-balance"
+                    id="withdraw"
                     label="Balance"
                     className={classes.textField}
                     type="number"
+                    // autoComplete="current-password"
                     onChange={handleChange('balance')}
                     placeholder={0}
                     margin="normal"
                 />
+            </div>
+            <div>
                 <TextField
                     id="currency-type"
                     select
@@ -154,7 +114,7 @@ function TransferTable(props) {
                     ))}
                 </TextField>
             </div>
-            <Button variant="contained" color="primary">转账</Button>
+            <Button variant="contained" color="primary">提现</Button>
         </div>
     )
 }

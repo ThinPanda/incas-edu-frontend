@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -10,7 +10,7 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
+import {red} from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -18,7 +18,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles(theme => ({
     card: {
-        maxWidth: 345,
+        maxWidth: 300,
+        margin: 'auto'
     },
     media: {
         height: 0,
@@ -39,7 +40,8 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function ItemCard(props) {
+
+export default function ItemCard() {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
@@ -57,7 +59,7 @@ export default function ItemCard(props) {
                 }
                 action={
                     <IconButton aria-label="Settings">
-                        <MoreVertIcon />
+                        <MoreVertIcon/>
                     </IconButton>
                 }
                 title="Shrimp and Chorizo Paella"
@@ -65,7 +67,7 @@ export default function ItemCard(props) {
             />
             <CardMedia
                 className={classes.media}
-                image="/static/images/cards/paella.jpg"
+                image="https://img3.doubanio.com/view/subject/l/public/s6807265.jpg"
                 title="Paella dish"
             />
             <CardContent>
@@ -76,10 +78,10 @@ export default function ItemCard(props) {
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="Add to favorites">
-                    <FavoriteIcon />
+                    <FavoriteIcon/>
                 </IconButton>
                 <IconButton aria-label="Share">
-                    <ShareIcon />
+                    <ShareIcon/>
                 </IconButton>
                 <IconButton
                     className={clsx(classes.expand, {
@@ -89,7 +91,7 @@ export default function ItemCard(props) {
                     aria-expanded={expanded}
                     aria-label="Show more"
                 >
-                    <ExpandMoreIcon />
+                    <ExpandMoreIcon/>
                 </IconButton>
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>

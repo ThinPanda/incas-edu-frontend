@@ -16,14 +16,17 @@ const useStyles = makeStyles(theme => ({
         height: 100,
         marginLeft: 100,
     },
-    showData: {
-        flexGrow: 1,
-        textAlign: "center",
-    },
-    content: {
+    child: {
+        display: 'flex',
         padding: '16px',
         margin: '20px',
-        width: '30vw'
+        textAlign: 'center'
+    },
+    table: {
+        borderStyle: 'solid',
+        borderWidth: '20px',
+        borderColor: 'rgba(0,0,0,0.24)',
+        flexGrow: 1
     }
 }));
 
@@ -40,14 +43,6 @@ export default function Contrast() {
                     权益分配合约
                 </Typography>
                 <div style={{padding: '16px'}}>
-                    {/*<div style={{display: "flex", alignItems: "center"}}>*/}
-                        {/*/!*<Avatar className={classes.avatar} src="https://material-ui.com/static/images/avatar/1.jpg"/>*!/*/}
-                        {/*<div style={{flexGrow: 1}}>/!*为了方便布局，加入的空标签*!/</div>*/}
-                        {/*<div style={{flexGrow: 4}}>*/}
-                            {/*<Typography variant="h5">hello</Typography>*/}
-                            {/*<Typography variant="subtitle2" color="textSecondary">September 14, 2016</Typography>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
                     <hr style={{margin: 20}}/>
                 </div>
                 <ContrastTable/>
@@ -57,14 +52,19 @@ export default function Contrast() {
 }
 
 function ContrastTable(props) {
+
+    const classes = useStyles();
+
     return(
-        <div style={{display: 'flex'}}>
-            <div style={{flexGrow: 1}}>
+        <div className={classes.child}>
+            <div className={classes.table}>
                 <Typography variant='h6'>平台</Typography>
+                <hr/>
                 <Typography variant='body1'>0.03%</Typography>
             </div>
-            <div style={{flexGrow: 1}}>
+            <div className={classes.table}>
                 <Typography variant='h6'>服务提供商</Typography>
+                <hr/>
                 <Typography variant='body1'>99.7%</Typography>
             </div>
         </div>

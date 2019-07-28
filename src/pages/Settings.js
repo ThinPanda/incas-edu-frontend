@@ -66,23 +66,6 @@ export default function Settings() {
                         </div>
                     </div>
                     <hr style={{margin: 20}}/>
-                    {/*<Typography variant="h6">当前余额：100</Typography>*/}
-                    {/*<div style={{display: "flex"}}>*/}
-                        {/*<div className={classes.showData}>*/}
-                            {/*<Button variant="outlined" color="primary" className={classes.showData} onClick={() => setRecharge(!recharge)}>{*/}
-                                {/*recharge ? '隐藏': '显示'}充值记录*/}
-                            {/*</Button>*/}
-                        {/*</div>*/}
-                        {/*<div className={classes.showData}>*/}
-                            {/*<Button variant="outlined" color="secondary" className={classes.showData} onClick={() => setTransfer(!transfer)}>*/}
-                                {/*{transfer ? '隐藏': '显示'}转账记录*/}
-                            {/*</Button>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
-                    {/*<div style={{display: "flex"}}>*/}
-                        {/*<div className={classes.showData}>{ recharge && <div style={{padding:16}}>充值列表：<SimpleDataList/></div>}</div>*/}
-                        {/*<div className={classes.showData}>{ transfer && <div style={{padding:16}}>转账列表：<SimpleDataList/></div>}</div>*/}
-                    {/*</div>*/}
                     <Typography variant="h6">接下来显示的是详细信息</Typography>
                 </div>
             </Paper>

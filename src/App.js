@@ -7,9 +7,10 @@ import HomePage from "./pages/HomePage";
 import Details from "./pages/UserDetails";
 import Resources from "./pages/ResourcesPage";
 import MyResource from "./pages/MyResourcePage";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/LoginPage1";
 import {ContextProvider} from "./hooks/GlobalContext";
 import Settings from "./pages/Settings";
+import Register from "./pages/RegisterPage";
 import Recharge from "./pages/ordinary/RechargePage";
 import Transfer from "./pages/ordinary/TransferPage";
 import Upload from "./pages/agency/UploadPage";
@@ -18,6 +19,7 @@ import CentralBank from "./pages/admin/CentralBankPage";
 import Contrast from "./pages/admin/ContrastPage";
 import Audit from "./pages/admin/AuditPage";
 import Monitor from "./pages/admin/MonitorPage";
+import Withdraw from "./pages/agency/WithdrawPage";
 
 
 function App() {
@@ -27,6 +29,7 @@ function App() {
             <Router>
                 <HomePage path="/index" />
                 <LoginPage path="/login"/>
+                <Register path="/register"/>
                 <PersistentDrawerLeft path="/">
                     <Details path="/detail" />
                     <Resources path="/resource" />
@@ -38,6 +41,7 @@ function App() {
                     <MyResource path="/myResource" />
                     <Upload path="/upload" />
                     <MyUpload path="/myUpload" />
+                    <Withdraw path="/withdraw" />
                     {/* 以下的是管理员登录后才能看见的组件  */}
                     <CentralBank path="/centralBank" />
                     <Contrast path="/contrast" />

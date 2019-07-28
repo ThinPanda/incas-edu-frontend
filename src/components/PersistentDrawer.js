@@ -225,6 +225,10 @@ export default function PersistentDrawerLeft(props) {
                                         <ListItemIcon><AccountBoxIcon/></ListItemIcon>
                                         <ListItemText primary={'我的资源'}/>
                                     </ListItem>
+                                    <ListItem onClick={() => navigate('/withdraw')} button key={'提现'}>
+                                        <ListItemIcon><AccountBoxIcon/></ListItemIcon>
+                                        <ListItemText primary={'提现'}/>
+                                    </ListItem>
                                 </List>
                                 <Divider />
                             </div>

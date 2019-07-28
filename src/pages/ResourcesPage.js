@@ -15,11 +15,9 @@ const useStyles = makeStyles(theme => ({
         marginBottom: "20px"
     },
     content: {
-        // width: "60vw",
         flexGrow: 3,
     },
     details: {
-        // width: "30vw"
         flexGrow: 2,
     }
 }));
@@ -43,7 +41,6 @@ export default function Resources() {
                     {resourceData.map((value, index) => {
                         return <ResourceCard style={{padding: "30px"}}/>
                     })}
-                    {/*<ItemCard/>*/}
                 </Paper>
                 <Paper className={classes.details}>
                     资源详情
