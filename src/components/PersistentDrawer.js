@@ -155,7 +155,7 @@ export default function PersistentDrawerLeft(props) {
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         color="inherit"
-                        onClick={() => navigate('/index')}
+                        onClick={() => navigate('/')}
                     >
                         <HomeIcon />
                     </IconButton>
@@ -180,7 +180,7 @@ export default function PersistentDrawerLeft(props) {
                 </div>
                 <Divider />
                 <List>
-                    <ListItem onClick={() => navigate('/index')} button key={'首页'}>
+                    <ListItem onClick={() => navigate('/')} button key={'首页'}>
                         <ListItemIcon><AccountBoxIcon/></ListItemIcon>
                         <ListItemText primary={'首页'}/>
                     </ListItem>

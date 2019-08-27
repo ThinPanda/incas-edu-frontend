@@ -28,7 +28,7 @@ function App() {
     <div>
         <ContextProvider>
             <Router>
-                <HomePage path="/index" />
+                <HomePage path="/" />
                 <LoginPage path="/login"/>
                 <Register path="/register"/>
                 <PersistentDrawerLeft path="/">
