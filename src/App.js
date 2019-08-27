@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import { Router, Link } from "@reach/router";
+import { Router } from "@reach/router";
 
 import PersistentDrawerLeft from "./components/PersistentDrawer";
 import HomePage from "./pages/HomePage";
 import Details from "./pages/UserDetails";
 import Resources from "./pages/ResourcesPage";
 import MyResource from "./pages/MyResourcePage";
-import LoginPage from "./pages/LoginPage1";
+import LoginPage from "./pages/LoginPage";
 import {ContextProvider} from "./hooks/GlobalContext";
 import Settings from "./pages/Settings";
 import Register from "./pages/RegisterPage";
@@ -17,7 +17,8 @@ import Upload from "./pages/agency/UploadPage";
 import MyUpload from "./pages/agency/MyUploadPage";
 import CentralBank from "./pages/admin/CentralBankPage";
 import Contrast from "./pages/admin/ContrastPage";
-import Audit from "./pages/admin/AuditPage";
+import AuditTrading from "./pages/admin/AuditTradingPage";
+import AuditResource from "./pages/admin/AuditResourcePage";
 import Monitor from "./pages/admin/MonitorPage";
 import Withdraw from "./pages/agency/WithdrawPage";
 
@@ -45,7 +46,8 @@ function App() {
                     {/* 以下的是管理员登录后才能看见的组件  */}
                     <CentralBank path="/centralBank" />
                     <Contrast path="/contrast" />
-                    <Audit path="/audit" />
+                    <AuditTrading path="/auditTrading" />
+                    <AuditResource path="/auditResource" />
                     <Monitor path="/monitor" />
 
                     <Settings path="/modifyInfo" />

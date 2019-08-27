@@ -1,14 +1,9 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from '@material-ui/core/styles';
-import ItemCard from "../components/ItemCard";
 import Typography from "@material-ui/core/Typography";
 import { GlobalContext } from "../hooks/GlobalContext";
 import Avatar from "@material-ui/core/Avatar";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import Button from "@material-ui/core/Button";
-import SimpleDataList from "../components/SimpleDataList";
 
 
 const useStyles = makeStyles(theme => ({
@@ -33,11 +28,9 @@ const useStyles = makeStyles(theme => ({
 export default function Settings() {
 
     const classes = useStyles();
-    const { state, dispatch } = useContext(GlobalContext);
-    const [ recharge, setRecharge ] = useState(false);
-    const [ transfer, setTransfer ] = useState(false);
-
-    const data = [1, 2, 3, 4, 5];
+    const { state } = useContext(GlobalContext);
+    // const [ recharge, setRecharge ] = useState(false);
+    // const [ transfer, setTransfer ] = useState(false);
 
     // function handleRechargeList() {
     //     setRecharge(true);

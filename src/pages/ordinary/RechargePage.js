@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import {makeStyles} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import {userRecharge} from "../../fetch/requestAPI";
+import {GlobalContext} from "../../hooks/GlobalContext";
+import {navigate} from "@reach/router";
 
 
 const useStyles = makeStyles(theme => ({
@@ -17,8 +20,6 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'center'
     },
     textField: {
-        // marginLeft: theme.spacing(1),
-        // marginRight: theme.spacing(1),
         margin: 25,
         width: 200,
     },
@@ -36,6 +37,16 @@ const payment = [
 ];
 
 export default function RechargePage() {
+
+    const { state } = useContext(GlobalContext);
+
+    useEffect(() => {
+        if (!state.isLogin){
+            window.alert("您好,请先登录!");
+            navigate("/login");
+            return;
+        }
+    }, []);
 
     const classes = useStyles();
 
@@ -66,6 +77,14 @@ function RechargeTable(props) {
         setValues({ ...values, [name]: event.target.value });
     };
 
+    const handleSubmit = async () => {
+        // window.alert(values.balance);
+        let res = await userRecharge(values.balance, values.payment);
+        if(res === "充值成功"){
+            window.alert("充值成功");
+        }
+    };
+
     const classes = useStyles();
 
     return(
@@ -76,9 +95,8 @@ function RechargeTable(props) {
                     label="Balance"
                     className={classes.textField}
                     type="number"
-                    // autoComplete="current-password"
                     onChange={handleChange('balance')}
-                    placeholder={0}
+                    placeholder={"0"}
                     margin="normal"
                 />
             </div>
@@ -106,7 +124,7 @@ function RechargeTable(props) {
                     ))}
                 </TextField>
             </div>
-            <Button variant="contained" color="primary">充值</Button>
+            <Button variant="contained" color="primary" onClick={handleSubmit}>充值</Button>
         </div>
     )
 }

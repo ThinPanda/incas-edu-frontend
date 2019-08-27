@@ -2,11 +2,15 @@ import React, {useContext, useEffect, useState} from "react";
 import Paper from "@material-ui/core/Paper";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
-import {GlobalContext} from "../hooks/GlobalContext";
-import {getResourceList} from "../fetch/requestAPI";
-import { ResourceCard } from "../components/ResourceCard";
-import Button from "@material-ui/core/Button/Button";
-import TextField from "@material-ui/core/TextField/TextField";
+import {GlobalContext} from "../../hooks/GlobalContext";
+import {
+    adminGetResourceListR,
+    adminGetResourceListW,
+    adminGetResourceListY,
+} from "../../fetch/requestAPI";
+import {ResourceAuditCard} from "../../components/ResourceCard";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import {navigate} from "@reach/router";
 
 
@@ -23,18 +27,20 @@ const useStyles = makeStyles(theme => ({
     },
     details: {
         flexGrow: 1,
-        marginLeft: "40px"
+        marginLeft: "40px",
     }
 }));
 
-export default function Resources() {
+export default function AuditResource() {
     const classes = useStyles();
     const { state } = useContext(GlobalContext);
 
     const [detail, setDetail] = useState(false);
     const [fileDetail, setFileDetail] = useState(null);
 
-    const [resource, setResource] = useState(null);
+    const [resourceW, setResourceW] = useState(null);
+    const [resourceY, setResourceY] = useState(null);
+    const [resourceR, setResourceR] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -47,24 +53,38 @@ export default function Resources() {
 
         const fetchData = async () => {
             setIsLoading(true);
-            const list = await getResourceList(state.userType);
+            const listW = await adminGetResourceListW();
+            const listY = await adminGetResourceListY();
+            const listR = await adminGetResourceListR();
             // console.log(list);
-            setResource(list);
+            setResourceW(listW);
+            setResourceY(listY);
+            setResourceR(listR);
             setIsLoading(false)
         };
         fetchData();
     }, []);
+
+    // const openDetail = () => {
+    //     setDetail(true);
+    // };
 
     function openDetail(details){
         setDetail(true);
         setFileDetail(details);
     };
 
+    const checkState = {
+        0: "待审核",
+        1: "已通过审核",
+        2: "未通过审核"
+    };
+
     return(
         <div className={classes.root}>
             <Paper className={classes.header}>
                 <Typography variant='h5' align='center'>
-                    资源中心页!
+                    资源审核
                 </Typography>
             </Paper>
             {
@@ -74,11 +94,27 @@ export default function Resources() {
                     </Paper>
                 ) : (
                     <div style={{display: "flex"}}>
-                        <Paper className={classes.content}>
-                            {resource.map((value, index) => (
-                                <ResourceCard data={value} onClick={()=> openDetail(value)} style={{padding: "30px"}} key={index} userType={state.userType}/>
-                            ))}
-                        </Paper>
+                        <div className={classes.content}>
+                            <Paper>
+                                <Typography style={{padding: "10px"}}>待审核：</Typography>
+                                {resourceW.map((value, index) => (
+                                    <ResourceAuditCard data={value} ifChecked={0} onClick={()=> openDetail(value)} style={{padding: "30px"}} key={index}/>
+                                ))}
+                            </Paper>
+                            <Paper>
+                                <Typography style={{padding: "10px"}}>已通过：</Typography>
+                                {resourceY.map((value, index) => (
+                                    <ResourceAuditCard data={value} ifChecked={1} onClick={()=> openDetail(value)} style={{padding: "30px"}} key={index}/>
+                                ))}
+                            </Paper>
+                            <Paper>
+                                <Typography style={{padding: "10px"}}>已拒绝：</Typography>
+                                {resourceR.map((value, index) => (
+                                    <ResourceAuditCard data={value} ifChecked={2} onClick={()=> openDetail(value)} style={{padding: "30px"}} key={index}/>
+                                ))}
+                            </Paper>
+                        </div>
+
                         {
                             detail &&
                             <Paper className={classes.details}>
@@ -113,22 +149,22 @@ export default function Resources() {
                                         <Typography variant="subtitle1" color="textPrimary">关键字</Typography>
                                         <Typography variant="body1" color="textSecondary">{fileDetail.fileKeyWord}</Typography>
                                     </div>
-                                    {/*<div style={{display: "flex", justifyContent: "space-between", marginBottom: "20px"}}>*/}
-                                        {/*<Typography variant="subtitle1" color="textPrimary">当前状态</Typography>*/}
-                                        {/*<Typography variant="body1" color="textSecondary">{checkState[fileDetail.fileChecked]}</Typography>*/}
-                                    {/*</div>*/}
+                                    <div style={{display: "flex", justifyContent: "space-between", marginBottom: "20px"}}>
+                                        <Typography variant="subtitle1" color="textPrimary">当前状态</Typography>
+                                        <Typography variant="body1" color="textSecondary">{checkState[fileDetail.fileChecked]}</Typography>
+                                    </div>
                                     <div style={{display: "flex", justifyContent: "space-between", marginBottom: "20px"}}>
                                         <Typography variant="subtitle1" color="textPrimary">资源简介</Typography>
                                         {/*<TextField*/}
-                                        {/*id="outlined-multiline-static"*/}
-                                        {/*label="fileDescription"*/}
-                                        {/*multiline*/}
-                                        {/*rows="4"*/}
-                                        {/*defaultValue="Default Value: this is file description"*/}
-                                        {/*// className={classes.textField}*/}
-                                        {/*disabled="true"*/}
-                                        {/*margin="normal"*/}
-                                        {/*variant="outlined"*/}
+                                            {/*id="outlined-multiline-static"*/}
+                                            {/*label="fileDescription"*/}
+                                            {/*multiline*/}
+                                            {/*rows="4"*/}
+                                            {/*defaultValue="Default Value: this is file description"*/}
+                                            {/*// className={classes.textField}*/}
+                                            {/*disabled="true"*/}
+                                            {/*margin="normal"*/}
+                                            {/*variant="outlined"*/}
                                         {/*/>*/}
                                     </div>
                                     <TextField

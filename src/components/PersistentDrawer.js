@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import clsx from 'clsx';
-import {Link, navigate} from "@reach/router";
+import {navigate} from "@reach/router";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -22,6 +22,7 @@ import FormGroup from "@material-ui/core/FormGroup/FormGroup";
 import Switch from "@material-ui/core/Switch/Switch";
 import HomeIcon from "@material-ui/icons/Home";
 import {GlobalContext} from "../hooks/GlobalContext";
+import ZjuImg from "../assets/zju.png"
 
 
 const drawerWidth = 240;
@@ -66,7 +67,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         padding: '0 8px',
         ...theme.mixins.toolbar,
-        justifyContent: 'flex-end',
+        // justifyContent: 'flex-end',
     },
     content: {
         flexGrow: 1,
@@ -89,10 +90,6 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function MyContent() {
-
-}
-
 
 export default function PersistentDrawerLeft(props) {
     const classes = useStyles();
@@ -104,6 +101,13 @@ export default function PersistentDrawerLeft(props) {
 
     function handleChange(event) {
         setAuth(event.target.checked);
+        if (auth) {
+            dispatch({ operation: "login", type: "reset" });
+            dispatch({ operation: "username", type: "reset" });
+            dispatch({ operation: "userType", type: "reset" });
+        } else {
+            navigate('/login',3000)
+        }
     }
 
     function handleDrawerOpen() {
@@ -142,7 +146,7 @@ export default function PersistentDrawerLeft(props) {
                     <div className={classes.grow} />
                     <FormGroup className={classes.loginButton}>
                         <FormControlLabel
-                            control={<Switch checked={auth} onClick={() => navigate('/login')} onChange={handleChange} aria-label="LoginSwitch" />}
+                            control={<Switch checked={auth} onChange={handleChange} aria-label="LoginSwitch"/>}
                             label={auth ? 'Logout' : 'Login'}
                         />
                     </FormGroup>
@@ -167,6 +171,9 @@ export default function PersistentDrawerLeft(props) {
                 }}
             >
                 <div className={classes.drawerHeader}>
+                    {/* 这里应该有个校徽 */}
+                    <img src={ZjuImg} style={{width: "40px", height: "40px"}}/>
+                    <Typography align="center" style={{flexGrow: 2}}>ZJU_Incas</Typography>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                     </IconButton>
@@ -245,9 +252,13 @@ export default function PersistentDrawerLeft(props) {
                                         <ListItemIcon><AccountBoxIcon/></ListItemIcon>
                                         <ListItemText primary={'权益分配合约'}/>
                                     </ListItem>
-                                    <ListItem onClick={() => navigate('/audit')} button key={'业务审核'}>
+                                    <ListItem onClick={() => navigate('/auditTrading')} button key={'交易审核'}>
                                         <ListItemIcon><AccountBoxIcon/></ListItemIcon>
-                                        <ListItemText primary={'业务审核'}/>
+                                        <ListItemText primary={'交易审核'}/>
+                                    </ListItem>
+                                    <ListItem onClick={() => navigate('/auditResource')} button key={'资源审核'}>
+                                        <ListItemIcon><AccountBoxIcon/></ListItemIcon>
+                                        <ListItemText primary={'资源审核'}/>
                                     </ListItem>
                                     <ListItem onClick={() => navigate('/monitor')} button key={'数据监测'}>
                                         <ListItemIcon><AccountBoxIcon/></ListItemIcon>

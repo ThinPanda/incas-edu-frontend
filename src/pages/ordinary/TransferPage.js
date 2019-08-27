@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import {makeStyles} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import {userTransfer} from "../../fetch/requestAPI";
+import {navigate} from "@reach/router";
+import {GlobalContext} from "../../hooks/GlobalContext";
 
 
 const useStyles = makeStyles(theme => ({
@@ -54,6 +57,16 @@ const accountType = [
 
 export default function Transfer() {
 
+    const { state } = useContext(GlobalContext);
+
+    useEffect(() => {
+        if (!state.isLogin){
+            window.alert("您好,请先登录!");
+            navigate("/login");
+            return;
+        }
+    }, []);
+
     const classes = useStyles();
 
     return (
@@ -83,6 +96,14 @@ function TransferTable(props) {
 
     const handleChange = name => event => {
         setValues({ ...values, [name]: event.target.value });
+    };
+
+    const handleSubmit = async ()=> {
+        // window.alert(values.type);
+        let res = await userTransfer(values.account, values.balance, values.type, values.currency);
+        if(res === "充值成功"){
+            window.alert("转账成功");
+        }
     };
 
     const classes = useStyles();
@@ -128,7 +149,7 @@ function TransferTable(props) {
                     className={classes.textField}
                     type="number"
                     onChange={handleChange('balance')}
-                    placeholder={0}
+                    placeholder={"0"}
                     margin="normal"
                 />
                 <TextField
@@ -154,7 +175,7 @@ function TransferTable(props) {
                     ))}
                 </TextField>
             </div>
-            <Button variant="contained" color="primary">转账</Button>
+            <Button variant="contained" color="primary" onClick={handleSubmit}>转账</Button>
         </div>
     )
 }

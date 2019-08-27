@@ -1,9 +1,10 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {makeStyles} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import {GlobalContext} from "../../hooks/GlobalContext";
+import {navigate} from "@reach/router";
 
 
 const useStyles = makeStyles(theme => ({
@@ -32,9 +33,15 @@ const useStyles = makeStyles(theme => ({
 export default function CentralBank() {
 
     const classes = useStyles();
-    const { state, dispatch } = useContext(GlobalContext);
-    const [ recharge, setRecharge ] = useState(false);
-    const [ transfer, setTransfer ] = useState(false);
+    const { state } = useContext(GlobalContext);
+
+    useEffect(() => {
+        if (!state.isLogin){
+            window.alert("您好,请先登录!");
+            navigate("/login");
+            return;
+        }
+    }, []);
 
     return (
         <div className={classes.root}>

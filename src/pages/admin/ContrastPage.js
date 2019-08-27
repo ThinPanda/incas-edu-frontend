@@ -1,7 +1,9 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import {makeStyles} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import {GlobalContext} from "../../hooks/GlobalContext";
+import {navigate} from "@reach/router";
 
 
 const useStyles = makeStyles(theme => ({
@@ -31,6 +33,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Contrast() {
+
+    const { state } = useContext(GlobalContext);
+
+    useEffect(() => {
+        if (!state.isLogin){
+            window.alert("您好,请先登录!");
+            navigate("/login");
+            return;
+        }
+    }, []);
 
     const classes = useStyles();
 

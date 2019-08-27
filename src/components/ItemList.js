@@ -14,13 +14,20 @@ import grey from '@material-ui/core/colors/grey';
 
 const SUCCESS_COLOR = green[300];
 const FAILED_COLOR = red[200];
-const UNCHERCKED_COLOR = grey[500];
+const UNCHECKED_COLOR = grey[500];
+
+const msgColor = {
+    0: UNCHECKED_COLOR,
+    1: SUCCESS_COLOR,
+    2: FAILED_COLOR
+};
 
 const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
         maxWidth: '90%',
-        display: 'flex',
+        // display: 'flex',
+        display: 'content',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
         overflow: 'hidden',
@@ -30,14 +37,15 @@ const useStyles = makeStyles(theme => ({
     gridList: {
         width: '100%',
         backgroundColor: theme.palette.background.paper,
-        height: 500,
+        // height: 500,
     },
     inline: {
         display: 'inline',
     },
     avatar: {
-        width: 50,
-        height: 50,
+        width: 75,
+        height: 75,
+        marginRight: 15,
     },
     data: {
         padding: '20px',
@@ -46,44 +54,52 @@ const useStyles = makeStyles(theme => ({
     msg: {
         display: 'flex',
         padding: '10px',
-        backgroundColor: SUCCESS_COLOR,
+        // backgroundColor: SUCCESS_COLOR,
         // backgroundColor: FAILED_COLOR,
         // backgroundColor: UNCHERCKED_COLOR,
         color: 'white',
     },
+    stateBar: {
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+    }
 }));
 
 
 export default function ItemsList(props) {
     const classes = useStyles();
+    const data = props.data;
 
     return (
+        Array.isArray(data) && data.length !== 0 ?
         <div className={classes.root}>
-            <div style={{padding: "30px"}}>
+            <div style={{padding: "15px"}}>
                 <GridList cellHeight={"auto"} className={classes.gridList} cols={2} spacing={10} >
-                    {props.data.map((value, index) => (
-                        <GridListTile key={index} cols={1}>
-                            <MyGridItem/>
+                    {data.map((value, index) => (
+                        <GridListTile key={index} cols={1} component="div">
+                            <MyGridItem ifChecked={props.ifChecked} data={value}/>
                         </GridListTile>
                     ))}
                 </GridList>
             </div>
-        </div>
+        </div> : <Typography variant="subtitle2" color="textSecondary" align="center">暂没有相关数据</Typography>
     );
 }
 
 
-function MyGridItem() {
+function MyGridItem(props) {
     const classes = useStyles();
+    const data = props.data;
 
     return (
         <div>
             <ListItem alignItems="flex-start"  className={classes.data}>
                 <ListItemAvatar>
-                    <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/2.jpg" />
+                    <Avatar className={classes.avatar} alt="Remy Sharp" src={data.fileImage} />
                 </ListItemAvatar>
                 <ListItemText
-                    primary="Brunch this weekend?"
+                    primary={data.fileTitle}
                     secondary={
                         <React.Fragment>
                             <Typography
@@ -92,18 +108,25 @@ function MyGridItem() {
                                 className={classes.inline}
                                 color="textPrimary"
                             >
-                                Ali Connors
+                                {data.fileInitialProvider}
                             </Typography>
-                            {" — I'll be in your neighborhood doing errands this…"}
+                            { " —— " + data.fileDescription}
                         </React.Fragment>
                     }
                 />
             </ListItem>
-            <div className={classes.msg}>
-                <span style={{flexGrow: 1, textAlign:'center'}}>audit: pass</span>
-                <span style={{flexGrow: 1, textAlign:'right'}}>
-                    by: panda
-                </span>
+            <div className={classes.msg} style={{backgroundColor: msgColor[props.ifChecked]}}>
+                {
+                    props.ifChecked === 0 ?
+                    <div className={classes.stateBar}>
+                        <span style={{flexGrow: 1, textAlign:'center'}}>audit: to be checked</span>
+                        <span style={{flexGrow: 1, textAlign:'center'}}>upload time: {data.createTime}</span>
+                    </div> :
+                    <div className={classes.stateBar}>
+                        <span style={{flexGrow: 1, textAlign:'center'}}>audit: {props.ifChecked === 1 ? "pass" : "reject"}</span>
+                        <span style={{flexGrow: 1, textAlign:'right'}}>by: {data.adminEmail}</span>
+                    </div>
+                }
             </div>
         </div>
     )

@@ -1,25 +1,26 @@
 import React, { useReducer } from "react";
 
 const initialState = {
-    count: 0,
+    // count: 0,
     isLogin: false,
+    token: null,
     username: null,
     userType: null,
 };
 const GlobalContext = React.createContext({});
 
-function countReducer(state, action) {
-    switch (action.type) {
-        case "reset":
-            return { ...state, count: initialState.count };
-        case "increment":
-            return { ...state, count: state.count + 1 };
-        case "decrement":
-            return { ...state, count: state.count - 1 };
-        default:
-            return { ...state, count: initialState.count };
-    }
-}
+// function countReducer(state, action) {
+//     switch (action.type) {
+//         case "reset":
+//             return { ...state, count: initialState.count };
+//         case "increment":
+//             return { ...state, count: state.count + 1 };
+//         case "decrement":
+//             return { ...state, count: state.count - 1 };
+//         default:
+//             return { ...state, count: initialState.count };
+//     }
+// }
 
 function loginReducer(state, action) {
     switch (action.type) {
@@ -32,7 +33,15 @@ function loginReducer(state, action) {
     }
 }
 
+function tokenReducer(state, action) {
+    if ( "reset" === action.type )
+        return { ...state, token: initialState.token };
+    return { ...state, token: action.type };
+}
+
 function usernameReducer(state, action) {
+    if ( "reset" === action.type )
+        return { ...state, username: initialState.username };
     return { ...state, username: action.type };
 }
 
@@ -51,10 +60,12 @@ function userTypeReducer(state, action) {
 
 function reducer(state, action) {
     switch (action.operation) {
-        case "count":
-            return countReducer(state, action);
+        // case "count":
+        //     return countReducer(state, action);
         case "login":
             return loginReducer(state, action);
+        case "token":
+            return tokenReducer(state, action);
         case "username":
             return usernameReducer(state, action);
         case "userType":

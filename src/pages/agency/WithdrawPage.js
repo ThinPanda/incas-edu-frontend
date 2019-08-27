@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import {makeStyles} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import {agencyWithdraw} from "../../fetch/requestAPI";
+import {GlobalContext} from "../../hooks/GlobalContext";
+import {navigate} from "@reach/router";
 
 
 const useStyles = makeStyles(theme => ({
@@ -45,6 +48,16 @@ const currencies = [
 
 export default function Withdraw() {
 
+    const { state } = useContext(GlobalContext);
+
+    useEffect(() => {
+        if (!state.isLogin){
+            window.alert("您好,请先登录!");
+            navigate("/login");
+            return;
+        }
+    }, []);
+
     const classes = useStyles();
 
     return (
@@ -74,6 +87,13 @@ function WithdrawTable(props) {
         setValues({ ...values, [name]: event.target.value });
     };
 
+    const handleSubmit = async ()=> {
+        let res = await agencyWithdraw(values.balance, values.currency);
+        if( res === "提现成功"){
+            window.alert(res);
+        }
+    };
+
     const classes = useStyles();
 
     return(
@@ -86,7 +106,7 @@ function WithdrawTable(props) {
                     type="number"
                     // autoComplete="current-password"
                     onChange={handleChange('balance')}
-                    placeholder={0}
+                    placeholder={"0"}
                     margin="normal"
                 />
             </div>
@@ -114,7 +134,7 @@ function WithdrawTable(props) {
                     ))}
                 </TextField>
             </div>
-            <Button variant="contained" color="primary">提现</Button>
+            <Button variant="contained" color="primary" onClick={handleSubmit}>提现</Button>
         </div>
     )
 }
