@@ -47,11 +47,11 @@ const currencies = [
 const accountType = [
     {
         value: '个人',
-        label: 'ordinary',
+        label: '普通用户',
     },
     {
         value: '机构',
-        label: 'agency',
+        label: '机构用户',
     },
 ];
 
@@ -101,9 +101,10 @@ function TransferTable(props) {
     const handleSubmit = async ()=> {
         // window.alert(values.type);
         let res = await userTransfer(values.account, values.balance, values.type, values.currency);
-        if(res === "充值成功"){
+        if(res === "转账成功"){
             window.alert("转账成功");
         }
+        // console.log(values);
     };
 
     const classes = useStyles();
@@ -124,7 +125,7 @@ function TransferTable(props) {
                     select
                     label="Account type"
                     className={classes.textField}
-                    value={values.currency}
+                    value={values.type}
                     onChange={handleChange('type')}
                     SelectProps={{
                         native: true,

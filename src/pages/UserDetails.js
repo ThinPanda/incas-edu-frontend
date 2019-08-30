@@ -97,7 +97,7 @@ export default function Details() {
                         <Avatar className={classes.avatar} src="https://material-ui.com/static/images/avatar/1.jpg"/>
                         <div style={{flexGrow: 1}}>{/*为了方便布局，加入的空标签*/}</div>
                         <div style={{flexGrow: 4}}>
-                            <Typography variant="h5">hello {user_type[state.userType]} {state.username}</Typography>
+                            <Typography variant="h5">Welcome {user_type[state.userType]} {state.username}</Typography>
                             {
                                 state.userType === "ORDINARY" &&
                                 <div>
