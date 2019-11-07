@@ -8,6 +8,8 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from '@material-ui/icons/ArrowDownward';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import {GlobalContext} from "../hooks/GlobalContext";
+import Bg1 from "../assets/bg1.png";
+import Bg2 from "../assets/bg2.jpg";
 
 
 const useStyles = makeStyles(theme => ({
@@ -18,11 +20,14 @@ const useStyles = makeStyles(theme => ({
     },
     page1: {
         // background: 'linear-gradient(to left bottom, hsl(118, 100%, 85%) 0%, hsl(168, 100%, 85%) 100%)',
-        background: 'linear-gradient(to left bottom, hsl(216, 100%, 85%) 0%, hsl(196, 100%, 85%) 100%)',
+        // background: 'linear-gradient(to left bottom, hsl(216, 100%, 85%) 0%, hsl(196, 100%, 85%) 100%)',
+        backgroundImage: `url(${Bg2})`,
         height: '100vh'
     },
     page2: {
-        background: 'linear-gradient(to left bottom, hsl(124, 100%, 85%) 0%,hsl(153, 100%, 85%) 100%)',
+        // background: 'linear-gradient(to left bottom, hsl(124, 100%, 85%) 0%,hsl(153, 100%, 85%) 100%)',
+        backgroundImage: `url(${Bg1})`,
+        backgroundSize: 'cover',
         height: '100vh'
     },
     login: {

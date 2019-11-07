@@ -15,6 +15,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -60,9 +62,12 @@ export default function ItemCard(props) {
                     </Avatar>
                 }
                 action={
-                    <IconButton aria-label="Settings">
-                        <MoreVertIcon/>
-                    </IconButton>
+                    <Tooltip title="Download Now">
+                        <IconButton aria-label="Settings">
+                            {/*<MoreVertIcon/>*/}
+                            <GetAppIcon/>
+                        </IconButton>
+                    </Tooltip>
                 }
                 title={data.fileTitle}
                 subheader={new Date(data.createTime).toLocaleDateString()}
@@ -84,16 +89,18 @@ export default function ItemCard(props) {
                 <IconButton aria-label="Share">
                     <ShareIcon/>
                 </IconButton>
-                <IconButton
-                    className={clsx(classes.expand, {
-                        [classes.expandOpen]: expanded,
-                    })}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="Show more"
-                >
-                    <ExpandMoreIcon/>
-                </IconButton>
+                <Tooltip title="Show More Info">
+                    <IconButton
+                        className={clsx(classes.expand, {
+                            [classes.expandOpen]: expanded,
+                        })}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="Show more"
+                    >
+                        <ExpandMoreIcon/>
+                    </IconButton>
+                </Tooltip>
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>

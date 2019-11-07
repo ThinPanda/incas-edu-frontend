@@ -19,6 +19,7 @@ import Select from "@material-ui/core/Select";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
 import * as MyFetch from "../fetch/requestAPI"
+import BgImg from "../assets/blockchain_tech.jpg";
 
 
 
@@ -27,10 +28,10 @@ const useStyles = makeStyles(theme => ({
         height: '100vh',
     },
     image: {
-        backgroundImage: 'url(https://images.unsplash.com/photo-1562154151-9f409048035f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max)',
+        backgroundImage: `url(${BgImg})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        // backgroundPosition: 'center',
     },
     paper: {
         margin: theme.spacing(8, 4),

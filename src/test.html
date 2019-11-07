@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Sakura's website</title>
+    <base href="https://github.com/BarasKing" target="_blank">
+    <style type="text/css">
+        body
+        {
+            background-image:url('https://cdn.pixabay.com/photo/2019/09/18/19/53/piano-4487573_1280.jpg');
+            background-size: 100%;
+            /*background-repeat: no-repeat;*/
+        }
+
+        body
+        {
+            height: 100%;
+        }
+
+        body #container
+        {
+            background-color:black;
+            opacity: 0.2;
+            width:500px;
+            height: 250px;
+            margin:0 auto;
+            margin-top:200px;
+            border-radius:20px;
+        }
+
+        body #header
+        {
+            height:160px;
+            text-align:center;
+            margin:0px;
+        }
+
+        body #header-content
+        {
+            color:white;
+            height:75px;
+
+        }
+
+        body #header-content a
+        {
+            font-family: "楷体";
+            color:white;
+            text-decoration:none;
+            font-size:22px;
+            letter-spacing:10px;
+        }
+
+        body #header-content a:hover
+        {
+            text-decoration: underline;
+        }
+
+        body #header-content p
+        {
+            font-size:15px;
+        }
+
+        body #content
+        {
+            height:140px;
+            margin:0px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        body #content #main-content a
+        {
+
+            color:white;
+            text-decoration: none;
+        }
+
+        body #content #main-content a:hover
+        {
+            text-decoration: underline;
+            color:white;
+        }
+
+        body #footer hr2
+        {
+            margin-top:300px;
+        }
+
+        body #footer #footer-content button
+        {
+            border:0;
+            background-color:#000000;
+            font-size:20px;
+            color:white;
+            border-radius: 10px;
+            float: right;
+            margin-right: 25px;
+        }
+
+        /* .container
+        {
+            text-align: center;
+        }
+
+        .center_div
+        {
+            border:1px solid gray;
+            margin-left: auto;
+            margin-right: auto;
+            width:90%;
+            background-color: #d0f0f6;
+            text-align:right;
+            padding:8px;
+        } */
+    </style>
+    <script type="text/javascript">
+
+        var bodyBgs = [];
+        bodyBgs[0] = "https://cdn.pixabay.com/photo/2019/09/19/14/30/night-4489410_1280.jpg";
+        bodyBgs[1] = "https://cdn.pixabay.com/photo/2019/09/16/06/26/fog-4479936_1280.jpg";
+        bodyBgs[2] = "https://cdn.pixabay.com/photo/2019/09/06/13/35/landscape-4456368_1280.jpg";
+        //输出随机的背景图
+        function change()
+        {
+            let randomBgIndex = Math.round( Math.random() * 2 );
+            // document.write('<style>body{background:url(' + bodyBgs[randomBgIndex] + '); background-size:100% ; }</style>');
+            let body = document.getElementById("body");
+            body.setAttribute("style", "background:url("+ bodyBgs[randomBgIndex] + "); background-size:100%");
+
+            console.log(randomBgIndex);
+        }
+        setInterval(change,1000);
+    </script>
+</head>
+
+<body id="body">
+<div>
+    <!--内容-->
+    <div id="container-inner">
+
+        <!--页头 -->
+        <div id="header">
+            <div id="header-content">
+                <h1 id="change"><a href="javascript:bgImage();">个人网站</a></h1>
+                <p>Sakura's Personal website</p>
+
+                <hr class="hr1">
+            </div>
+        </div>
+
+        <!--中间部分-->
+        <div id="content">
+            <div id="main-content">
+                <p><a href="https://github.com/BarasKing">Sakura's Github</a></p>
+            </div>
+        </div>
+
+        <!--页脚-->
+        <div id="footer">
+            <div id="footer-container">
+                <div id="footer-content">
+                    <hr class="hr2">
+                    <button><a href="#">more</a></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+
+</html>
+
+

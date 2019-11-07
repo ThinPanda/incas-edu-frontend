@@ -4,7 +4,7 @@ import React from "react";
  * Java Rest API 服务器地址
  * @type {string}
  */
-const baseUrl = `http://10.214.144.223:8081`;
+const baseUrl = `http://10.214.241.223:8081`;
 
 
 let token = null;
