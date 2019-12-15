@@ -21,6 +21,8 @@ import AuditTrading from "./pages/admin/AuditTradingPage";
 import AuditResource from "./pages/admin/AuditResourcePage";
 import Monitor from "./pages/admin/MonitorPage";
 import Withdraw from "./pages/agency/WithdrawPage";
+import Appeal from "./pages/agency/AppealPage";
+import AuditAppeal from "./pages/admin/AuditAppealPage";
 
 
 function App() {
@@ -43,11 +45,13 @@ function App() {
                     <Upload path="/upload" />
                     <MyUpload path="/myUpload" />
                     <Withdraw path="/withdraw" />
+                    <Appeal path="/appeal" />
                     {/* 以下的是管理员登录后才能看见的组件  */}
                     <CentralBank path="/centralBank" />
                     <Contrast path="/contrast" />
                     <AuditTrading path="/auditTrading" />
                     <AuditResource path="/auditResource" />
+                    <AuditAppeal path="/auditAppeal" />
                     <Monitor path="/monitor" />
 
                     <Settings path="/modifyInfo" />

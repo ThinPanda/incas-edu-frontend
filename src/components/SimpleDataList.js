@@ -159,3 +159,95 @@ export function WithdrawList(props) {
         </div> : <Typography variant="subtitle2" color="textSecondary" align="center">暂没有提现记录</Typography>
     );
 }
+
+
+export function AppealList(props) {
+    const classes = useStyles();
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleChange = panel => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+    };
+
+    const data = props.data;
+
+    const check_state = ["待处理", "申诉成功", "申诉失败"];
+
+    return (
+        Array.isArray(data) && data.length !== 0 ?
+            <div className={classes.root}>
+                {
+                    data.map((value, index) => {
+                        let panel = "panel" + (index + 1);
+                        return(
+                            <ExpansionPanel expanded={expanded === panel} onChange={handleChange(panel)} key={index}>
+                                <ExpansionPanelSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                >
+                                    <Typography className={classes.heading}>资源id：{value.fileId}</Typography>
+                                    <Typography className={classes.heading}>审核状态 ：{check_state[value.ifChecked]}</Typography>
+                                    <Typography className={classes.heading}>处理人：{value.adminEmail ? value.adminEmail : "暂未处理"}</Typography>
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails>
+                                    <Typography className={classes.secondaryHeading}>
+                                    <span>
+                                        申请理由：{value.detail}
+                                        <br/>
+                                        申请时间：{new Date(value.createTime).toLocaleDateString() + " " + new Date(value.createTime).toLocaleTimeString()}
+                                        {/*<br/>*/}
+                                        {/*审核人：{value.adminEmail}*/}
+                                    </span>
+                                    </Typography>
+                                </ExpansionPanelDetails>
+                            </ExpansionPanel>
+                        )
+                    })
+                }
+            </div> : <Typography variant="subtitle2" color="textSecondary" align="center">暂没有申诉记录</Typography>
+    );
+}
+
+
+export function AppealResultList(props) {
+    const classes = useStyles();
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleChange = panel => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+    };
+
+    const data = props.data;
+
+    return (
+        Array.isArray(data) && data.length !== 0 ?
+            <div className={classes.root}>
+                {
+                    data.map((value, index) => {
+                        let panel = "panel" + (index + 1);
+                        return(
+                            <ExpansionPanel expanded={expanded === panel} onChange={handleChange(panel)} key={index}>
+                                <ExpansionPanelSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                >
+                                    <Typography className={classes.heading}>资源id：{value.fileId}</Typography>
+                                    <Typography className={classes.heading}>审核状态 ：{value.ifChecked === 1 ? "通过审核" : "未通过审核"}</Typography>
+                                    <Typography className={classes.heading}>处理人：{value.adminEmail ? value.adminEmail : "暂未处理"}</Typography>
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails>
+                                    <Typography className={classes.secondaryHeading}>
+                                    <span>
+                                        申诉ID：{value.id}
+                                        <br/>
+                                        处理时间：{new Date(value.createTime).toLocaleDateString() + " " + new Date(value.createTime).toLocaleTimeString()}
+                                        {/*<br/>*/}
+                                        {/*审核人：{value.adminEmail}*/}
+                                    </span>
+                                    </Typography>
+                                </ExpansionPanelDetails>
+                            </ExpansionPanel>
+                        )
+                    })
+                }
+            </div> : <Typography variant="subtitle2" color="textSecondary" align="center">暂没有申诉记录</Typography>
+    );
+}

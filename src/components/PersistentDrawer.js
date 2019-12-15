@@ -236,6 +236,10 @@ export default function PersistentDrawerLeft(props) {
                                         <ListItemIcon><AccountBoxIcon/></ListItemIcon>
                                         <ListItemText primary={'提现'}/>
                                     </ListItem>
+                                    <ListItem onClick={() => navigate('/appeal')} button key={'侵权申诉'}>
+                                        <ListItemIcon><AccountBoxIcon/></ListItemIcon>
+                                        <ListItemText primary={'侵权申诉'}/>
+                                    </ListItem>
                                 </List>
                                 <Divider />
                             </div>
@@ -252,6 +256,9 @@ export default function PersistentDrawerLeft(props) {
                                         <ListItemIcon><AccountBoxIcon/></ListItemIcon>
                                         <ListItemText primary={'权益分配合约'}/>
                                     </ListItem>
+                                </List>
+                                <Divider/>
+                                <List>
                                     <ListItem onClick={() => navigate('/auditTrading')} button key={'交易审核'}>
                                         <ListItemIcon><AccountBoxIcon/></ListItemIcon>
                                         <ListItemText primary={'交易审核'}/>
@@ -260,6 +267,13 @@ export default function PersistentDrawerLeft(props) {
                                         <ListItemIcon><AccountBoxIcon/></ListItemIcon>
                                         <ListItemText primary={'资源审核'}/>
                                     </ListItem>
+                                    <ListItem onClick={() => navigate('/auditAppeal')} button key={'侵权申诉审核'}>
+                                        <ListItemIcon><AccountBoxIcon/></ListItemIcon>
+                                        <ListItemText primary={'侵权申诉审核'}/>
+                                    </ListItem>
+                                </List>
+                                <Divider/>
+                                <List>
                                     <ListItem onClick={() => navigate('/monitor')} button key={'数据监测'}>
                                         <ListItemIcon><AccountBoxIcon/></ListItemIcon>
                                         <ListItemText primary={'数据监测'}/>

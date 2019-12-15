@@ -7,9 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from "@material-ui/core/Button";
 import {
-    adminAgreeAgencyWithdraw,
+    adminAgreeAgencyWithdraw, adminAgreeAppeal,
     adminAgreeUserRecharge,
-    adminRejectAgencyWithdraw,
+    adminRejectAgencyWithdraw, adminRejectAppeal,
     adminRejectUserRecharge
 } from "../fetch/requestAPI";
 
@@ -42,8 +42,6 @@ export function RechargeAuditList(props) {
     };
 
     async function agreeRecharge(rechargeId, index) {
-        // console.log(rechargeId);
-        // console.log(index);
 
         let res = await adminAgreeUserRecharge(rechargeId);
 
@@ -52,8 +50,8 @@ export function RechargeAuditList(props) {
             let temp = audit;
             temp[index] = 1;
             setAudit(temp);
-            // setAudit(audit[index] = 1);
-            // console.log(audit);
+            // 强制闭合标签，防止重复提交
+            setExpanded(false);
         }
     }
 
@@ -67,7 +65,8 @@ export function RechargeAuditList(props) {
             let temp = audit;
             temp[index] = 2;
             setAudit(temp);
-            // console.log(audit);
+            // 强制闭合标签，防止重复提交
+            setExpanded(false);
         }
     }
 
@@ -140,6 +139,8 @@ export function WithdrawAuditList(props) {
             let temp = audit;
             temp[index] = 1;
             setAudit(temp);
+            // 强制闭合标签，防止重复提交
+            setExpanded(false);
         }
     }
 
@@ -151,6 +152,8 @@ export function WithdrawAuditList(props) {
             let temp = audit;
             temp[index] = 2;
             setAudit(temp);
+            // 强制闭合标签，防止重复提交
+            setExpanded(false);
         }
     }
 
@@ -197,5 +200,93 @@ export function WithdrawAuditList(props) {
                     })
                 }
             </div> : <Typography variant="subtitle2" color="textSecondary" align="center">暂没有待审核提现记录</Typography>
+    );
+}
+
+
+export function AppealAuditList(props) {
+
+    const data = props.data;
+    const classes = useStyles();
+
+    const [expanded, setExpanded] = React.useState(false);
+    const [audit, setAudit] = React.useState({});
+
+    const handleChange = panel => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+    };
+
+
+    async function agreeAppeal(appealId, index) {
+        console.log(appealId);
+        let res = await adminAgreeAppeal(appealId);
+        if (res){
+            window.alert("已通过该申诉");
+            let temp = audit;
+            temp[index] = 1;
+            setAudit(temp);
+            // 强制闭合标签，防止重复提交
+            setExpanded(false);
+        }
+    }
+
+    async function rejectAppeal(appealId, index) {
+        console.log(appealId);
+        let res = await adminRejectAppeal(appealId);
+        if (res) {
+            window.alert("已拒绝该申诉");
+            let temp = audit;
+            temp[index] = 2;
+            setAudit(temp);
+            // 强制闭合标签，防止重复提交
+            setExpanded(false);
+        }
+    }
+
+    return (
+        Array.isArray(data) && data.length !== 0 ?
+            <div className={classes.root}>
+                {
+                    data.map((value, index) => {
+                        let panel = "panel" + (index + 1);
+                        return(
+                            <ExpansionPanel expanded={expanded === panel} onChange={handleChange(panel)} key={index}>
+                                <ExpansionPanelSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                >
+                                    <Typography className={classes.heading}>申诉用户：{value.agencyEmail}</Typography>
+                                    <Typography className={classes.heading}>申诉资源ID：{value.fileId}</Typography>
+                                    <Typography className={classes.heading}>申诉时间：{new Date(value.createTime).toLocaleDateString() + " " + new Date(value.createTime).toLocaleTimeString()}</Typography>
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails style={{display: "flex", alignItems: "center"}}>
+                                    <Typography className={classes.secondaryHeading}>
+                                        <span>
+                                            申诉ID：{value.id}
+                                            <br/>
+                                            申诉理由：{value.detail}
+                                            <br/>
+                                            水印信息：{value.watermark}
+                                        </span>
+                                    </Typography>
+                                    {
+                                        !audit[index] ?
+                                            (
+                                                <div style={{display: "flex", flexGrow: 1, justifyContent: "space-around"}}>
+                                                    <Button onClick={()=> agreeAppeal(value.id, index)} variant="outlined" color="primary">agree</Button>
+                                                    <Button onClick={()=> rejectAppeal(value.id, index)} variant="outlined" color="secondary">reject</Button>
+                                                </div>
+                                            ) : (
+                                                <div style={{display: "flex", flexGrow: 1, justifyContent: "space-around"}}>
+                                                    <span style={{flexGrow: 1, textAlign:'center'}}>CHECKED</span>
+                                                    <span style={{flexGrow: 1, textAlign:'center'}}>STATE: {audit[index] === 1 ? "AGREE" : "REJECT"}</span>
+                                                </div>
+                                            )
+                                    }
+                                </ExpansionPanelDetails>
+                            </ExpansionPanel>
+                        )
+                    })
+                }
+            </div> : <Typography variant="subtitle2" color="textSecondary" align="center">暂没有审核记录</Typography>
     );
 }

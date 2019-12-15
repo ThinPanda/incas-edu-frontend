@@ -4,7 +4,8 @@ import React from "react";
  * Java Rest API 服务器地址
  * @type {string}
  */
-const baseUrl = `http://10.214.241.223:8081`;
+// const baseUrl = `http://10.214.241.223:8081`;
+const baseUrl = `http://127.0.0.1:8081`;
 
 
 let token = null;
@@ -33,7 +34,7 @@ async function myFetch(url, init) {
     let result = await response.json();
 
     if (result.status !== 0){
-        console.log("Fetch Error: ", result.message);
+        console.log("Fetch Error: ", result.data);
         throw new Error(result.message);
     }
     return result.data ;
@@ -356,6 +357,45 @@ export async function agencyBuyOwnership(id) {
     return response;
 }
 
+/**
+ * 机构用户申诉侵权资源
+ */
+export async function appealService(params) {
+    const {id, file, detail} = params;
+    const url = baseUrl + `/agency/appeal`;
+
+    const formdata = new FormData();
+    formdata.append("id", id);
+    formdata.append("file", file);
+    formdata.append("detail", detail);
+
+    const headers = new Headers();
+    headers.append("Accept","application/json");
+    headers.append("token", token);
+
+    let response;
+    try {
+        response = await myFetch(url, { method: "POST", headers: headers, body: formdata});
+    } catch (e) {
+        console.log(e);
+    }
+    return response;
+}
+
+/**
+ * 机构用户获取自己的申诉记录
+ */
+export async function getAgencyAppealList(id){
+    const url = baseUrl + `/agency/appeal/${id}`;
+    let response;
+    try {
+        response = await myFetch(url);
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
 
 
 /*********************      管理员专有界面       ***************************/
@@ -447,7 +487,7 @@ export async function adminAgreeResource(id) {
     const url = baseUrl + `/admin/serviceY?id=${id}`;
     let response;
     try {
-        response = await myFetch(url);
+        response = await myFetch(url, { method: "POST" });
     } catch (e) {
         console.log(e);
     }
@@ -462,7 +502,7 @@ export async function adminRejectResource(id) {
     const url = baseUrl + `/admin/serviceR?id=${id}`;
     let response;
     try {
-        response = await myFetch(url);
+        response = await myFetch(url, { method: "POST" });
     } catch (e) {
         console.log(e);
     }
@@ -522,6 +562,97 @@ export async function adminAgreeAgencyWithdraw(withdrawId) {
  */
 export async function adminRejectAgencyWithdraw(withdrawId) {
     const url = baseUrl + `/admin/withdrawR?withdrawId=${withdrawId}`;
+    let response;
+    try {
+        response = await myFetch(url, { method: "POST" });
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
+
+/**
+ * 管理员获取未审核侵权上诉记录
+ */
+export async function getUncheckedAppealList() {
+    const url = baseUrl + `/admin/appealList/unchecked`;
+    let response;
+    try {
+        response = await myFetch(url);
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
+/**
+ * 管理员获取已审核侵权上诉记录
+ */
+export async function getCheckedAppealList() {
+    const url = baseUrl + `/admin/appealList/checked`;
+    let response;
+    try {
+        response = await myFetch(url);
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
+/**
+ * 管理员获取审核通过侵权上诉记录
+ */
+export async function getApprovedAppealList() {
+    const url = baseUrl + `/admin/appealList/approved`;
+    let response;
+    try {
+        response = await myFetch(url);
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
+/**
+ * 管理员获取未审核拒绝侵权上诉记录
+ */
+export async function getRejectAppealList() {
+    const url = baseUrl + `/admin/appealList/reject`;
+    let response;
+    try {
+        response = await myFetch(url);
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
+/**
+ * 管理员审核通过侵权上诉
+ */
+export async function adminAgreeAppeal(id) {
+    const url = baseUrl + `/admin/appeal/approve?id=${id}`;
+    let response;
+    try {
+        response = await myFetch(url, { method: "POST" });
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
+/**
+ * 管理员审核拒绝侵权上诉
+ */
+export async function adminRejectAppeal(id) {
+    const url = baseUrl + `/admin/appeal/reject?id=${id}`;
     let response;
     try {
         response = await myFetch(url, { method: "POST" });
