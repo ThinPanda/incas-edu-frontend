@@ -212,11 +212,14 @@ export function AppealResultList(props) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
-    const handleChange = panel => (event, isExpanded) => {
-        setExpanded(isExpanded ? panel : false);
-    };
-
     const data = props.data;
+
+    const handleChange = (panel, fileId, index) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+        if (isExpanded){
+            props.onClick(fileId, index, "checked")
+        }
+    };
 
     return (
         Array.isArray(data) && data.length !== 0 ?
@@ -225,7 +228,7 @@ export function AppealResultList(props) {
                     data.map((value, index) => {
                         let panel = "panel" + (index + 1);
                         return(
-                            <ExpansionPanel expanded={expanded === panel} onChange={handleChange(panel)} key={index}>
+                            <ExpansionPanel expanded={expanded === panel} onChange={handleChange(panel, value.fileId, index)} key={index}>
                                 <ExpansionPanelSummary
                                     expandIcon={<ExpandMoreIcon />}
                                 >

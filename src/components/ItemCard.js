@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -14,9 +14,10 @@ import {red} from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Tooltip from "@material-ui/core/Tooltip";
+import {downloadResource} from "../fetch/requestAPI";
+import {GlobalContext} from "../hooks/GlobalContext";
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -45,10 +46,19 @@ const useStyles = makeStyles(theme => ({
 
 export default function ItemCard(props) {
     const classes = useStyles();
+    const { state } = useContext(GlobalContext);
     const [expanded, setExpanded] = React.useState(false);
 
     function handleExpandClick() {
         setExpanded(!expanded);
+    }
+
+    async function getResource(id, filename) {
+        // console.log(id, filename);
+        let user_type = state.userType === "ORDINARY" ? "user" : "agency";
+        let file = await downloadResource(id, filename, user_type);
+        // 没有输出
+        // console.log(file)
     }
 
     const data = props.value;
@@ -63,7 +73,7 @@ export default function ItemCard(props) {
                 }
                 action={
                     <Tooltip title="Download Now">
-                        <IconButton aria-label="Settings">
+                        <IconButton aria-label="Settings" onClick={() => getResource(data.id, data.fileName)}>
                             {/*<MoreVertIcon/>*/}
                             <GetAppIcon/>
                         </IconButton>

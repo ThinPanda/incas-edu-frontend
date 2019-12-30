@@ -56,6 +56,9 @@ function getHeader() {
 
 /*********************      用户登录/登出       ***************************/
 
+/**
+ * 用户使用账号密码登录
+ */
 export async function login(email, password, type) {
     // console.log("type: ",type);
     let user_type;
@@ -70,13 +73,33 @@ export async function login(email, password, type) {
             user_type = "admin";
             break;
     }
-    const url = baseUrl + `/login/${user_type}?email=${email}&password=${password}`;
-    const response = await myFetch(url, { method: "POST" });
+    const url = baseUrl + `/login/${user_type}`;
+    const body = JSON.stringify({
+        "email": email,
+        "password": password
+    });
+    const response = await myFetch(url, { method: "POST", body });
     token = response;
     // const response = await myFetch(url);
     return response;
 }
 
+/**
+ *  用户使用指纹虹膜登录
+ */
+export async function feature_login(feature) {
+    const url = baseUrl + `/login/token`;
+    const body = JSON.stringify({"token": feature});
+    const response = await myFetch(url, { method: "POST", body });
+    // console.log(response);
+    token = feature;
+    return response
+}
+
+
+/**
+ * 用户登出
+ */
 export async function logout() {
     token = null;
     // const response = await myFetch(url);
@@ -341,6 +364,35 @@ export async function uploadResource(params) {
     console.log(response);
     return response;
 }
+
+
+/**
+ * 机构用户下载资源
+ */
+export async function downloadResource(id, filename, usertype) {
+    const url = baseUrl + `/${usertype}/download/${id}`;
+    const headers = new Headers();
+    headers.append("token", token);
+    // 文件返回的不是 json 数据，没法用最上方封装好的函数
+    fetch(url, {headers: headers}).then(res => res.blob().then(blob => {
+        // 由于请求头添加了 token 字段，会变成 options 请求，首次返回时没有设置的字段，会报错
+        // let fileName = res.headers.get('Content-Disposition').split(';')[1].split('=')[1];
+        let fileName = filename;
+        // 获取 blob 本地文件连接 (blob 为纯二进制对象，不能够直接保存到磁盘上)
+        let url = window.URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = decodeURIComponent(fileName);
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function(){
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        },1000);
+        // console.log("res", res);
+    }))
+}
+
 
 /**
  * 机构用户购买所有权
@@ -662,5 +714,142 @@ export async function adminRejectAppeal(id) {
     // console.log(response);
     return response;
 }
+
+/**
+ * 管理员通过资源 id 获取资源详情
+ */
+export async function adminGetResourceInfo(id) {
+    const url = baseUrl + `/admin/resource?id=${id}`;
+    let response;
+    try {
+        response = await myFetch(url);
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
+/**
+ * 管理员获取所有普通用户的账户列表
+ */
+export async function adminGetUserIdList() {
+    const url = baseUrl + `/admin/supervise/email/user`;
+    let response;
+    try {
+        response = await myFetch(url);
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
+/**
+ * 管理员获取所有机构用户的账户列表
+ */
+export async function adminGetAgencyIdList() {
+    const url = baseUrl + `/admin/supervise/email/agency`;
+    let response;
+    try {
+        response = await myFetch(url);
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
+/**
+ * 管理员获取普通用户每月充值次数
+ */
+export async function adminGetRechargeFreq(id) {
+    const url = baseUrl + `/admin/supervise/frequency/month/recharge?id=${id}`;
+    let response;
+    try {
+        response = await myFetch(url);
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
+/**
+ * 管理员获取用户每月转账次数
+ */
+export async function adminGetTransferFreq(id) {
+    const url = baseUrl + `/admin/supervise/frequency/month/transfer?id=${id}`;
+    let response;
+    try {
+        response = await myFetch(url);
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
+/**
+ * 管理员获取机构用户今年每月提现次数
+ */
+export async function adminGetWithdrawFreq(id) {
+    const url = baseUrl + `/admin/supervise/frequency/month/withdraw?id=${id}`;
+    let response;
+    try {
+        response = await myFetch(url);
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
+/**
+ * 管理员获取机构用户每月发布资源次数
+ */
+export async function adminGetPublishFreq(id) {
+    const url = baseUrl + `/admin/supervise/frequency/month/publish?id=${id}`;
+    let response;
+    try {
+        response = await myFetch(url);
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
+/**
+ * 管理员获取普通用户每月购买资源阅读权次数
+ */
+export async function adminGetBuyReadPriceFreq(id) {
+    const url = baseUrl + `/admin/supervise/frequency/month/buyReadPrice?id=${id}`;
+    let response;
+    try {
+        response = await myFetch(url);
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
+
+/**
+ * 管理员获取机构用户每月购买资源所有权次数
+ */
+export async function adminGetBuyOwnershipFreq(id) {
+    const url = baseUrl + `/admin/supervise/frequency/month/buyOwnership?id=${id}`;
+    let response;
+    try {
+        response = await myFetch(url);
+    } catch (e) {
+        console.log(e);
+    }
+    // console.log(response);
+    return response;
+}
+
 
 /*********************      ----- end -----       ***************************/

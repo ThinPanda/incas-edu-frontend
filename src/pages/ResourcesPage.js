@@ -80,7 +80,7 @@ export default function Resources() {
                             ))}
                         </Paper>
                         {
-                            detail &&
+                            detail && fileDetail &&
                             <Paper className={classes.details}>
                                 <Button size="small" color="secondary" onClick={()=> setDetail(false)} style={{marginTop: "10px"}}>关闭</Button>
                                 <Typography variant="h6" align="center" style={{marginTop: "50px", marginBottom: "30px"}}>资源详情</Typography>

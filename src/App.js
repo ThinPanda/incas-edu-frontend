@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Router } from "@reach/router";
+import {Router} from "@reach/router";
 
 import PersistentDrawerLeft from "./components/PersistentDrawer";
 import HomePage from "./pages/HomePage";
@@ -23,6 +23,8 @@ import Monitor from "./pages/admin/MonitorPage";
 import Withdraw from "./pages/agency/WithdrawPage";
 import Appeal from "./pages/agency/AppealPage";
 import AuditAppeal from "./pages/admin/AuditAppealPage";
+import NotFound from "./pages/NotFound";
+import LoadingPage from "./pages/LoadingPage";
 
 
 function App() {
@@ -32,6 +34,7 @@ function App() {
             <Router>
                 <HomePage path="/" />
                 <LoginPage path="/login"/>
+                <LoadingPage path="/login_feature/:token" />
                 <Register path="/register"/>
                 <PersistentDrawerLeft path="/">
                     <Details path="/detail" />
@@ -55,6 +58,8 @@ function App() {
                     <Monitor path="/monitor" />
 
                     <Settings path="/modifyInfo" />
+
+                    <NotFound default />
                 </PersistentDrawerLeft>
             </Router>
         </ContextProvider>
